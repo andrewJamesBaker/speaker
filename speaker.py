@@ -22,10 +22,9 @@ spotify = tk.Spotify(app_token)
 
 redirect_uri = 'https://example.com/callback'
 
-security_file=open("tokens.txt","r+")
+# security_file=open("tokens.txt","r+")
 
-if (security_file.read)
-
+# user_token=security_file.read([0])
 
 user_token = tk.prompt_for_user_token(
     client_id,
@@ -33,6 +32,16 @@ user_token = tk.prompt_for_user_token(
     redirect_uri,
     scope=tk.scope.every
 )
+
+# if (user_token == ""):
+    # security_file.write(user_token)
+
+conf = (client_id, client_secret, redirect_uri, user_token.refresh_token)
+tk.config_to_file('tekore.cfg', conf)
+
+conf = tk.config_from_file('tekore.cfg', return_refresh=True)
+user_token = tk.refresh_user_token(*conf[:2], conf[3])
+
 
 spotify.token = user_token
 
